@@ -3,62 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using CheeseMVC.Models;
 
 namespace CheeseMVC.Controllers
 {
     public class CheeseController : Controller
     {
-        static private Dictionary<string, string> Cheeses = new Dictionary<string, string>();
-        static private string Error = null;
-
         // GET: /<controller>/
         public IActionResult Index()
         {
-            ViewBag.cheeses = Cheeses;
+            ViewBag.cheeses = CheeseData.GetAll();
             return View();
         }
 
         public IActionResult Add()
         {
-            ViewBag.error = Error;
             return View();
         }
 
         [HttpPost]
         [Route("Cheese/Add")]
-        public IActionResult NewCheese(string name, string description)
+        public IActionResult NewCheese(Cheese newCheese)
         {
             //Add new cheese to existing cheeses
-            if (name == null)
-            {
-                Error = "Name is required.";
-                return Redirect("/Cheese/Add");
-            }
-            else
-            {
-                Cheeses.Add(name, description);
-                Error = null;
-                return Redirect("/Cheese");
-            }
-        }
+            CheeseData.Add(newCheese);
 
+            return Redirect("/");
+        }
+        
         public IActionResult Remove()
         {
-            ViewBag.cheeses = Cheeses;
+            ViewBag.title = "Remove Cheese";
+            ViewBag.cheeses = CheeseData.GetAll();
             return View();
         }
-
+        
         [HttpPost]
-        [Route("Cheese/Remove")]
-        public IActionResult RemoveCheese(string[] names)
+        public IActionResult Remove(int[] cheeseIds)
         {
             // Remove cheese from existing cheeses
-            foreach (string name in names)
+            foreach (int cheeseId in cheeseIds)
             {
-                Cheeses.Remove(name);
+                CheeseData.Remove(cheeseId);
             }
-            
-            return Redirect("/Cheese");
+            return Redirect("/");
         }
     }
 }

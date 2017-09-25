@@ -1,8 +1,4 @@
-﻿@{
-    //Layout = null;
-}
-
-<h1>My Cheese</h1>
+﻿<h1>My Cheese</h1>
 
 @if (ViewBag.Cheeses.Count == 0)
 {
@@ -16,11 +12,11 @@
         <th>Description</th>
     </tr>
 
-    @foreach (KeyValuePair<string, string> cheese in ViewBag.cheeses)
+    @foreach (var cheese in ViewBag.cheeses)
     {
         <tr>
-            <td>@cheese.Key</td>
-            <td>@cheese.Value</td>
+            <td>@cheese.Name</td>
+            <td>@cheese.Description</td>
         </tr>
     }
 </table>

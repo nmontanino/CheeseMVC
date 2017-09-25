@@ -1,6 +1,4 @@
-﻿@{
-}
-<h1>Remove Cheese</h1>
+﻿<h1>@ViewBag.title</h1>
 
 @if (ViewBag.Cheeses.Count == 0)
 {
@@ -9,11 +7,11 @@
 else
 {
     <form method="post">
-        @foreach (KeyValuePair<string, string> cheese in ViewBag.cheeses)
+        @foreach (var cheese in ViewBag.cheeses)
         {
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="names" value="@cheese.Key" />@cheese.Key
+                    <input type="checkbox" name="cheeseIds" value="@cheese.CheeseId" />@cheese.Name
                 </label>
             </div>
         }

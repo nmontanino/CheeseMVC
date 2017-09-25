@@ -11,8 +11,12 @@ else
     <form method="post">
         @foreach (KeyValuePair<string, string> cheese in ViewBag.cheeses)
         {
-            <input type="checkbox" name="names" value="@cheese.Key" />@cheese.Key <br />
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="names" value="@cheese.Key" />@cheese.Key
+                </label>
+            </div>
         }
-        <input type="submit" value="Remove Cheese" />
+        <input class="btn btn-default" type="submit" value="Remove Cheese" />
     </form>
 }

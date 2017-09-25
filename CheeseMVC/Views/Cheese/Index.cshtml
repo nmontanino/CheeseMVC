@@ -9,9 +9,21 @@
     <p>No cheeses yet.</p>
 }
 
-<ul>
+<table class="table">
+
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+
     @foreach (KeyValuePair<string, string> cheese in ViewBag.cheeses)
     {
-        <li><h4>@cheese.Key</h4><p>@cheese.Value</p></li>
+        <tr>
+            <td>@cheese.Key</td>
+            <td>@cheese.Value</td>
+        </tr>
     }
-</ul>
+</table>
+
+@*<p><a asp-controller="Cheese" asp-action="Add" role="button" class="btn btn-default">Add Cheese</a></p>*@
+<p><a asp-controller="Cheese" asp-action="Add">Add Cheese</a></p>

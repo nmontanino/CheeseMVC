@@ -13,6 +13,7 @@
         <th>Name</th>
         <th>Description</th>
         <th>Type</th>
+        <th>Modify</th>
     </tr>
 
     @foreach (var cheese in Model)
@@ -21,9 +22,9 @@
             <td>@cheese.Name</td>
             <td>@cheese.Description</td>
             <td>@cheese.Type</td>
+            <td><a asp-controller="Cheese" asp-action="Edit" asp-route-id="@cheese.CheeseId" role="button" class="btn-sm btn-warning">Edit</a></td>
         </tr>
     }
 </table>
 
-@*<p><a asp-controller="Cheese" asp-action="Add" role="button" class="btn btn-default">Add Cheese</a></p>*@
-<p><a asp-controller="Cheese" asp-action="Add">Add Cheese</a></p>
+<p><a asp-controller="Cheese" asp-action="Add" role="button" class="btn btn-warning">Add Cheese</a></p>

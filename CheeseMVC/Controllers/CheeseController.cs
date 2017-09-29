@@ -20,7 +20,7 @@ namespace CheeseMVC.Controllers
         public IActionResult Add()
         {
             AddCheeseViewModel addCheeseViewModel = new AddCheeseViewModel();
-            return View();
+            return View(addCheeseViewModel);
         }
 
         [HttpPost]
@@ -32,7 +32,8 @@ namespace CheeseMVC.Controllers
                 Cheese newCheese = new Cheese
                 {
                     Name = addCheeseViewModel.Name,
-                    Description = addCheeseViewModel.Description
+                    Description = addCheeseViewModel.Description,
+                    Type = addCheeseViewModel.Type
                 };
 
                 CheeseData.Add(newCheese);

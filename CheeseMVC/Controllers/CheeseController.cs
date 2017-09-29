@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CheeseMVC.Models;
+using CheeseMVC.ViewModels;
 
 namespace CheeseMVC.Controllers
 {
@@ -12,23 +13,33 @@ namespace CheeseMVC.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            ViewBag.cheeses = CheeseData.GetAll();
-            return View();
+            List<Cheese> cheeses = CheeseData.GetAll();
+            return View(cheeses);
         }
 
         public IActionResult Add()
         {
+            AddCheeseViewModel addCheeseViewModel = new AddCheeseViewModel();
             return View();
         }
 
         [HttpPost]
-        [Route("Cheese/Add")]
-        public IActionResult NewCheese(Cheese newCheese)
+        public IActionResult Add(AddCheeseViewModel addCheeseViewModel)
         {
-            //Add new cheese to existing cheeses
-            CheeseData.Add(newCheese);
+            if (ModelState.IsValid)
+            {
+                //Add new cheese to existing cheeses
+                Cheese newCheese = new Cheese
+                {
+                    Name = addCheeseViewModel.Name,
+                    Description = addCheeseViewModel.Description
+                };
 
-            return Redirect("/");
+                CheeseData.Add(newCheese);
+
+                return Redirect("/");
+            }
+            return View(addCheeseViewModel);
         }
         
         public IActionResult Remove()

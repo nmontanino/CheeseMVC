@@ -1,17 +1,19 @@
-﻿<h1>Edit Cheese @ViewBag.cheese.Name (ID = @ViewBag.cheese.CheeseId)</h1>
+﻿@model CheeseMVC.Models.Cheese
+
+<h1>Edit Cheese @Model.Name (ID = @Model.CheeseId)</h1>
 
 <form method="post">
 
     <div class="form-group">
-        <label for="name">Name</label>
-        <input class="form-control" name="name" type="text" id="name" value="@ViewBag.cheese.Name"/>
+        <label asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" value="@Model.Name"/>
     </div>
     <div class="form-group">
-        <label for="description">Description</label>
-        <textarea class="form-control" name="description" id="description" >@ViewBag.cheese.Description</textarea>
+        <label asp-for="Description"></label>
+        <textarea class="form-control" asp-for="Description">@Model.Description</textarea>
     </div>
 
-    <input type="hidden" value="@ViewBag.cheese.CheeseId" name="id" />
+    <input type="hidden" value="@Model.CheeseId" name="cheeseId" />
     <input class="btn btn-default" type="submit" value="Edit Cheese" />
 
 </form>

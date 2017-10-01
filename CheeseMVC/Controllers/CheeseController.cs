@@ -62,18 +62,18 @@ namespace CheeseMVC.Controllers
         }
 
         public IActionResult Edit(int id)
-        {
-            ViewBag.cheese = CheeseData.GetById(id);
-            return View();
+        { 
+            Cheese cheeseEdit = CheeseData.GetById(id);
+            return View(cheeseEdit);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, string name, string description)
+        public IActionResult Edit(AddEditCheeseViewModel addEditVM)
         {
             // Update cheese name and descriptions
-            Cheese updatedCheese = CheeseData.GetById(id);
-            updatedCheese.Name = name;
-            updatedCheese.Description = description;
+            Cheese updatedCheese = CheeseData.GetById(addEditVM.CheeseId);
+            updatedCheese.Name = addEditVM.Name;
+            updatedCheese.Description = addEditVM.Description;
             return Redirect("/");
         }
     }

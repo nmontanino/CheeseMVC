@@ -38,5 +38,17 @@ namespace CheeseMVC.ViewModels
                 });
             }
         }
+        public static Cheese CreateCheese(AddCheeseViewModel i)
+        {
+            Cheese newCheese = new Cheese
+            {
+                Name = i.Name,
+                Description = i.Description,
+                Type = i.Type,
+                Rating = i.Rating
+            };
+
+            return newCheese;
+        }
     }
 }

@@ -55,20 +55,30 @@ namespace CheeseMVC.Controllers
             return Redirect("/");
         }
 
-        public IActionResult Edit(int id)
-        { 
-            Cheese cheeseEdit = CheeseData.GetById(id);
-            return View(cheeseEdit);
+        public IActionResult Edit(int cheeseId)
+        {
+            Cheese cheeseEdit = CheeseData.GetById(cheeseId);
+            AddEditCheeseViewModel addEditVM = AddEditCheeseViewModel.EditCheese(cheeseEdit);
+            return View(addEditVM);
         }
 
         [HttpPost]
         public IActionResult Edit(AddEditCheeseViewModel addEditVM)
         {
-            // Update cheese name and descriptions
-            Cheese updatedCheese = CheeseData.GetById(addEditVM.CheeseId);
-            updatedCheese.Name = addEditVM.Name;
-            updatedCheese.Description = addEditVM.Description;
-            return Redirect("/");
+            if (ModelState.IsValid)
+            {
+                // Update cheese name and descriptions
+                Cheese updatedCheese = CheeseData.GetById(addEditVM.CheeseId);
+                updatedCheese.Name = addEditVM.Name;
+                updatedCheese.Description = addEditVM.Description;
+                updatedCheese.Rating = addEditVM.Rating;
+                updatedCheese.Type = addEditVM.Type;
+                return Redirect("/");
+            }
+            else
+            {
+                return View(addEditVM);
+            }        
         }
     }
 }

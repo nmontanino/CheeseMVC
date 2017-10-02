@@ -13,6 +13,7 @@
         <th>Name</th>
         <th>Description</th>
         <th>Type</th>
+        <th>Rating</th>
         <th>Modify</th>
     </tr>
 
@@ -22,6 +23,7 @@
             <td>@cheese.Name</td>
             <td>@cheese.Description</td>
             <td>@cheese.Type</td>
+            <td>@cheese.Rating</td>
             <td><a asp-controller="Cheese" asp-action="Edit" asp-route-id="@cheese.CheeseId" role="button" class="btn-sm btn-warning">Edit</a></td>
         </tr>
     }

@@ -9,12 +9,13 @@ namespace CheeseMVC.ViewModels
 {
     public class AddEditCheeseViewModel : AddCheeseViewModel
     {
-        public int CheeseId { get; set; }
+        public int ID { get; set; }
 
         public static AddEditCheeseViewModel EditCheese(Cheese cheese)
         {
             AddEditCheeseViewModel edit = new AddEditCheeseViewModel
             {
+                ID = cheese.ID,
                 Name = cheese.Name,
                 Description = cheese.Description,
                 Type = cheese.Type,

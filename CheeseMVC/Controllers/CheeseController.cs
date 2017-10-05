@@ -65,25 +65,29 @@ namespace CheeseMVC.Controllers
             context.SaveChanges();
             return Redirect("/");
         }
-        /*
         public IActionResult Edit(int cheeseId)
         {
-            Cheese cheeseEdit = CheeseData.GetById(cheeseId);
+            Cheese cheeseEdit = context.Cheeses.Single(c => c.ID == cheeseId);
             AddEditCheeseViewModel addEditVM = AddEditCheeseViewModel.EditCheese(cheeseEdit);
             return View(addEditVM);
         }
 
+        
         [HttpPost]
         public IActionResult Edit(AddEditCheeseViewModel addEditVM)
         {
             if (ModelState.IsValid)
             {
                 // Update cheese name and descriptions
-                Cheese updatedCheese = CheeseData.GetById(addEditVM.CheeseId);
+                Cheese updatedCheese = context.Cheeses.Single(c => c.ID == addEditVM.ID);
+                context.Cheeses.Update(updatedCheese);
+
                 updatedCheese.Name = addEditVM.Name;
                 updatedCheese.Description = addEditVM.Description;
                 updatedCheese.Rating = addEditVM.Rating;
                 updatedCheese.Type = addEditVM.Type;
+
+                context.SaveChanges();
                 return Redirect("/");
             }
             else
@@ -91,6 +95,6 @@ namespace CheeseMVC.Controllers
                 return View(addEditVM);
             }        
         }
-        */
+        
     }
 }

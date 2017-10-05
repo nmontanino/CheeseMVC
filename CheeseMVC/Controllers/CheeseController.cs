@@ -5,15 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CheeseMVC.Models;
 using CheeseMVC.ViewModels;
+using CheeseMVC.Data;
 
 namespace CheeseMVC.Controllers
 {
     public class CheeseController : Controller
     {
+        private CheeseDbContext context;
+
+        public CheeseController(CheeseDbContext dbContext)
+        {
+            context = dbContext;
+        }
+
         // GET: /<controller>/
         public IActionResult Index()
         {
-            List<Cheese> cheeses = CheeseData.GetAll();
+            List<Cheese> cheeses = context.Cheeses.ToList();
             return View(cheeses);
         }
 
@@ -30,7 +38,8 @@ namespace CheeseMVC.Controllers
             {
                 //Add new cheese to existing cheeses
                 Cheese newCheese = AddCheeseViewModel.CreateCheese(addCheeseViewModel);
-                CheeseData.Add(newCheese);
+                context.Cheeses.Add(newCheese);
+                context.SaveChanges();
 
                 return Redirect("/");
             }
@@ -40,7 +49,7 @@ namespace CheeseMVC.Controllers
         public IActionResult Remove()
         {
             ViewBag.title = "Remove Cheese";
-            ViewBag.cheeses = CheeseData.GetAll();
+            ViewBag.cheeses = context.Cheeses.ToList();
             return View();
         }
         
@@ -50,11 +59,13 @@ namespace CheeseMVC.Controllers
             // Remove cheese from existing cheeses
             foreach (int cheeseId in cheeseIds)
             {
-                CheeseData.Remove(cheeseId);
+                Cheese theCheese = context.Cheeses.Single(c => c.ID == cheeseId);
+                context.Cheeses.Remove(theCheese);
             }
+            context.SaveChanges();
             return Redirect("/");
         }
-
+        /*
         public IActionResult Edit(int cheeseId)
         {
             Cheese cheeseEdit = CheeseData.GetById(cheeseId);
@@ -80,5 +91,6 @@ namespace CheeseMVC.Controllers
                 return View(addEditVM);
             }        
         }
+        */
     }
 }

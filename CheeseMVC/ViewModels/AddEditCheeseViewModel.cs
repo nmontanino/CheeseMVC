@@ -15,7 +15,6 @@ namespace CheeseMVC.ViewModels
         {
             AddEditCheeseViewModel edit = new AddEditCheeseViewModel
             {
-                CheeseId = cheese.CheeseId,
                 Name = cheese.Name,
                 Description = cheese.Description,
                 Type = cheese.Type,

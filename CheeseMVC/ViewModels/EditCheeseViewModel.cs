@@ -7,19 +7,20 @@ using System.Threading.Tasks;
 
 namespace CheeseMVC.ViewModels
 {
-    public class AddEditCheeseViewModel : AddCheeseViewModel
+    public class EditCheeseViewModel : AddCheeseViewModel
     {
         public int ID { get; set; }
 
-        public static AddEditCheeseViewModel EditCheese(Cheese cheese)
+        public static EditCheeseViewModel EditCheese(Cheese cheese)
         {
-            AddEditCheeseViewModel edit = new AddEditCheeseViewModel
+
+            EditCheeseViewModel edit = new EditCheeseViewModel
             {
                 ID = cheese.ID,
                 Name = cheese.Name,
                 Description = cheese.Description,
-                Type = cheese.Type,
-                Rating = cheese.Rating
+                Rating = cheese.Rating,
+                CategoryID = cheese.CategoryID
             };
 
             return edit;

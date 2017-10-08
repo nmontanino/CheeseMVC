@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using CheeseMVC.Models;
 using CheeseMVC.ViewModels;
 using CheeseMVC.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CheeseMVC.Controllers
 {
@@ -21,29 +22,34 @@ namespace CheeseMVC.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            List<Cheese> cheeses = context.Cheeses.ToList();
+            IList<Cheese> cheeses = context.Cheeses.Include(c => c.Category).ToList();
             return View(cheeses);
         }
 
         public IActionResult Add()
         {
-            AddCheeseViewModel addCheeseViewModel = new AddCheeseViewModel();
+            AddCheeseViewModel addCheeseViewModel = 
+                new AddCheeseViewModel(context.Categories.ToList());
+
             return View(addCheeseViewModel);
         }
 
         [HttpPost]
-        public IActionResult Add(AddCheeseViewModel addCheeseViewModel)
+        public IActionResult Add(AddCheeseViewModel addCheeseVM)
         {
             if (ModelState.IsValid)
             {
                 //Add new cheese to existing cheeses
-                Cheese newCheese = AddCheeseViewModel.CreateCheese(addCheeseViewModel);
+                CheeseCategory newCheeseCategory =
+                    context.Categories.Single(c => c.ID == addCheeseVM.CategoryID);
+
+                Cheese newCheese = AddCheeseViewModel.CreateCheese(addCheeseVM, newCheeseCategory);
                 context.Cheeses.Add(newCheese);
                 context.SaveChanges();
 
                 return Redirect("/");
             }
-            return View(addCheeseViewModel);
+            return View(addCheeseVM);
         }
         
         public IActionResult Remove()
@@ -68,33 +74,32 @@ namespace CheeseMVC.Controllers
         public IActionResult Edit(int cheeseId)
         {
             Cheese cheeseEdit = context.Cheeses.Single(c => c.ID == cheeseId);
-            AddEditCheeseViewModel addEditVM = AddEditCheeseViewModel.EditCheese(cheeseEdit);
-            return View(addEditVM);
+
+            EditCheeseViewModel editCheeseVM = EditCheeseViewModel.EditCheese(cheeseEdit);
+            return View(editCheeseVM);
         }
 
-        
         [HttpPost]
-        public IActionResult Edit(AddEditCheeseViewModel addEditVM)
+        public IActionResult Edit(EditCheeseViewModel editCheeseVM)
         {
             if (ModelState.IsValid)
             {
                 // Update cheese name and descriptions
-                Cheese updatedCheese = context.Cheeses.Single(c => c.ID == addEditVM.ID);
+                Cheese updatedCheese = context.Cheeses.Single(c => c.ID == editCheeseVM.ID);
                 context.Cheeses.Update(updatedCheese);
 
-                updatedCheese.Name = addEditVM.Name;
-                updatedCheese.Description = addEditVM.Description;
-                updatedCheese.Rating = addEditVM.Rating;
-                updatedCheese.Type = addEditVM.Type;
+                // TODO: Add edit for categories
+                updatedCheese.Name = editCheeseVM.Name;
+                updatedCheese.Description = editCheeseVM.Description;
+                updatedCheese.Rating = editCheeseVM.Rating;
 
                 context.SaveChanges();
                 return Redirect("/");
             }
             else
             {
-                return View(addEditVM);
-            }        
+                return View(editCheeseVM);
+            }
         }
-        
     }
 }

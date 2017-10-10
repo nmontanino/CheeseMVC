@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Add Item to Menu: " + Model.Menu.Name;
 }
+<h1>Add Item to Menu: @Model.Menu.Name</h1>
+
 <form asp-controller="Menu" asp-action="AddItem" method="post">
     
     <div class="form-group">

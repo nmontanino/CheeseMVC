@@ -78,7 +78,24 @@ namespace CheeseMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                //TODO: Save changes to context and redirect back to /Menu
+                int cheeseID = addMenuItemVM.CheeseID;
+                int menuID = addMenuItemVM.MenuID;
+
+                IList<CheeseMenu> existingItems = context.CheeseMenus
+                    .Where(cm => cm.CheeseID == cheeseID)
+                    .Where(cm => cm.MenuID == menuID).ToList();
+
+                if (existingItems.Count == 0)
+                {
+                    CheeseMenu menuItem = new CheeseMenu
+                    { 
+                        CheeseID = cheeseID,
+                        MenuID = menuID
+                    };
+                    context.CheeseMenus.Add(menuItem);
+                    context.SaveChanges();
+                }
+                return Redirect($"/Menu/ViewMenu/{addMenuItemVM.Menu.ID}");
             }
             return View(addMenuItemVM);
         }

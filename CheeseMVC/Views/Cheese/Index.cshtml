@@ -29,4 +29,7 @@
     <p>No cheeses yet.</p>
 }
 
-<p><a asp-controller="Cheese" asp-action="Add" role="button" class="btn btn-warning">Add Cheese</a></p>
+<div class="btn-group">
+    <a asp-controller="Cheese" asp-action="Add" role="button" class="btn btn-default">Add</a>
+    <a asp-controller="Cheese" asp-action="Remove" role="button" class="btn btn-default">Remove</a>
+</div>

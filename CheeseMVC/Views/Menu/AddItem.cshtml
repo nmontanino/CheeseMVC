@@ -2,4 +2,15 @@
 @{
     ViewBag.Title = "Add Item to Menu: " + Model.Menu.Name;
 }
-@*// TODO: Create form that adds cheeses to specified menu.*@
+<form asp-controller="Menu" asp-action="AddItem" method="post">
+    
+    <div class="form-group">
+        <label asp-for="CheeseID"></label>
+        <select class="form-control" asp-for="CheeseID" asp-items="Model.Cheeses"></select>
+        <span asp-validation-for="CheeseID"></span>
+    </div>
+    
+    <input type="hidden" name="MenuID" value="@Model.Menu.ID" />
+    <input class="btn btn-default" type="submit" value="Add Menu Item" />
+
+</form>

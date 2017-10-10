@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using CheeseMVC.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace CheeseMVC.ViewModels
 {
     public class AddMenuItemViewModel
     {
+        [Required]
+        [Display(Name = "Select Cheese to Add")]
         public int CheeseID { get; set; }
         public int MenuID { get; set; }
 
@@ -27,6 +30,7 @@ namespace CheeseMVC.ViewModels
                     Text = cheese.Name
                 });
             }
+            Menu = menu;
         }
         public AddMenuItemViewModel() { }
     }
